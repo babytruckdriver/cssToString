@@ -82,6 +82,7 @@ define(["helper/util", "jquery"], function (util, $) {
                                 file = files[0];
                                 if (file.type !== FILE_FORMAT) {
                                         this.errorHandle({statusText: "Solo están permitidos ficheros CSS."});
+                                        $(event.target).val("");
                                 } else if (file.size === 0) {
                                         this.errorHandle({statusText: "El fichero seleccionado está vacío."});
 
@@ -108,8 +109,14 @@ define(["helper/util", "jquery"], function (util, $) {
                                 string = util.cssToString(css);
                                 this.cssOutput.val(string);
                                 this.result.show();
+
+                                // Note: De esta forma nos aseguramos de que es lo último que se hace
+                                setTimeout(function () {
+                                        this.cssOutput.focus().select();
+                                }.bind(this), 0);
                         } else {
                                 this.errorHandle({statusText: "El fichero seleccionado está vacío."});
+                                $(event.target).val("");
                         }
                 }
         };

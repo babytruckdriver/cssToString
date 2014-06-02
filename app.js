@@ -66,6 +66,5 @@ app.post("/uploadFile", function (req, res) {
 
 
 app.listen(3000, function () {
-        //TODO conseguir extrar el puerto de 'app'. get("port") no funciona...
         console.log("Express server listening on port %s in %s mode", app.get("port"),  app.settings.env);
 });
