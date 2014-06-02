@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+        <meta charset="utf-8">
+        <title>cssToString</title>
+        <link rel="stylesheet" href="/stylesheets/style.css">
+        <script data-main="javascript/main" src="javascript/require.js"></script>
+</head>
+
+<body id="body">
+
+<header>
+        <section>
+                <h1>
+                        cssToString
+                </h1>
+        </section>
+</header>
+
+<main>
+        <!-- //TODO: Crear estilo para esta sección de la aplicación -->
+        <!-- //TODO: Crear sección para poder arrastrar y soltar un archivo encima -->
+        <header>
+                <h2>
+                        Upload a *.css file to convert to a valid JavaScript String
+                </h2>
+        </header>
+        <section id="file-upload">
+                <span>
+                        <input type="file" id="upload-field" accept="text/css">
+                </span>
+        </section>
+        <!-- //TODO: Añadir botón para copiar al portapapeles el contenido de la caja de texto -->
+        <article id="result" class="oculto">
+                <textarea class="css-output"></textarea>
+        </article>
+        <div id="error-container" class="oculto"></div>
+</main>
+<footer>
+        <ul id="social">
+          <a href="http://www.twitter.com/babytruckdriver" class="icon-social-twitter">
+            <li class="hide">Twitter</li>
+          </a>
+          <a href="https://github.com/babytruckdriver/" class="icon-social-github">
+            <li class="hide">GitHub</li>
+          </a>
+        </ul>
+</footer>
+
+</body>
+
+</html>
