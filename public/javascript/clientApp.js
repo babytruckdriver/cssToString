@@ -27,6 +27,10 @@ define(["helper/util", "jquery"], function (util, $) {
                         } //else {
                         // Great success! The File APIs are supported.
 
+                        // jQuery creates it's own event object, and it doesn't have a
+                        // "dataTransfer" property yet. This adds dataTransfer to the event object.
+                        jQuery.event.props.push('dataTransfer');
+
                         // Poner el foco en el primer campo de entrada visible
                         $("body").find("input[type=text]:visible:first").focus();
                         this.cacheElements();
@@ -38,10 +42,13 @@ define(["helper/util", "jquery"], function (util, $) {
                         this.errorContainer = $("#error-container");
                         this.result = $("#result");
                         this.cssOutput = this.result.find(".css-output");
+                        this.dropZone = $("#dropZone");
                 },
 
                 bindEvents: function () {
                         this.uploadField.on("change", this.validateSelectedFile.bind(this));
+                        this.dropZone.on("dragover", this.handleDragOver.bind(this));
+                        this.dropZone.on("drop", this.validateSelectedFile.bind(this));
 
                         //NOTE: De esta forma se pasan parámetros a la función Handler del evento:
                         /*this.transformBto.on("click", {callback: this.submitForm}, this.validateSelectedFile.bind(this));*/
@@ -70,18 +77,22 @@ define(["helper/util", "jquery"], function (util, $) {
                 },
 
                 validateSelectedFile: function (event) {
+                        event.stopPropagation();
+                        event.preventDefault();
 
                         // Se oculta, por si estuviese visible, el resultado de una conversión anterior
                         this.result.hide();
 
-                        // Se cargan los archivos adjuntados mediante la etiqueta <input type="file"
-                        var files = event.target.files;
+                        // Se cargan los archivos adjuntados mediante la etiqueta <input type="file" o el area "dragable"
+                        var files = (event.type === "drop") ? event.dataTransfer.files : event.target.files;
                         var file;
 
                         if (files && files[0]) {
                                 file = files[0];
                                 if (file.type !== FILE_FORMAT) {
                                         this.errorHandle({statusText: "Solo están permitidos ficheros CSS."});
+
+                                        //Se resetea el elemento "input"
                                         $(event.target).val("");
                                 } else if (file.size === 0) {
                                         this.errorHandle({statusText: "El fichero seleccionado está vacío."});
@@ -106,18 +117,25 @@ define(["helper/util", "jquery"], function (util, $) {
                         var string;
 
                         if (css) {
-                                string = util.cssToString(css);
-                                this.cssOutput.val(string);
-                                this.result.show();
-
                                 // Note: De esta forma nos aseguramos de que es lo último que se hace
+                                // Se añade al final del stack de ejecuciones
                                 setTimeout(function () {
                                         this.cssOutput.focus().select();
                                 }.bind(this), 0);
+
+                                string = util.cssToString(css);
+                                this.cssOutput.val(string);
+                                this.result.show();
                         } else {
                                 this.errorHandle({statusText: "El fichero seleccionado está vacío."});
                                 $(event.target).val("");
                         }
+                },
+
+                handleDragOver: function (event) {
+                        event.stopPropagation();
+                        event.preventDefault();
+                        event.dataTransfer.dropEffect = "copy";
                 }
         };
 
