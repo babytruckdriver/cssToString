@@ -27,9 +27,57 @@ main>section#file-upload {
 
 h1 {
         margin: 10px 0 10px 0;
-        line-height: 1.2em;
+        padding: 5px;
         font-size: 2em;
+        background-color: #f2f2f2;
+        box-shadow: rgba(0, 0, 0, 0.2) 0 0 2px 0;
 }
+
+h1 div {
+        display: inline;
+}
+
+h1 #a {
+        color: #6b92d8;
+}
+
+h1 #b {
+        padding: 2px 2px 8px 2px;
+        margin: 2px;
+        box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 2px;
+        color: #e38585;
+}
+
+h1 #c {
+       color:#9b984e;
+}
+
+h1 #c::after {
+        font-family: "entypo", fantasy !important;
+        font-size: 2em;
+        position: relative;
+        top: 8px;
+        -webkit-font-smoothing: antialiased;
+        -moz-smoothing: antialiased;
+        opacity: .6;
+        content: "\E717";
+
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        transform: rotate(0deg);
+        -webkit-transition:-webkit-transform 1s;
+        -moz-transition:-moz-transform 1s;
+        transition: transform 1s;
+
+        display: inline-block;
+}
+
+h1 #c:hover::after {
+        -webkit-transform: rotate(-90deg);
+        -moz-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+}
+
 h2 {
         font-size: 1em;
         color: #000;
