@@ -20,6 +20,9 @@ define({
                                 suffix = "\";";
                         }
 
+                        //Depende del editor puede haber añadido retornos de linea. Se eliminan.
+                        line = line.replace("\r","");
+
                         string += "\"" + line + suffix;
                 });
 
